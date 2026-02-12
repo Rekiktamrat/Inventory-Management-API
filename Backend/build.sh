@@ -6,5 +6,10 @@ pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 
-# Run migrations in a way that handles the auth_user dependency correctly
-python manage.py migrate --no-input --run-syncdb
+# Step 1: Create essential tables (contenttypes and auth) first
+# We use --run-syncdb to ensure they are created immediately
+python manage.py migrate contenttypes --no-input
+python manage.py migrate auth --no-input
+
+# Step 2: Apply the rest of the migrations
+python manage.py migrate --no-input
